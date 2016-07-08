@@ -1,0 +1,7 @@
+/bower_components
+/node_modules
+/test
+/docs
+.DS_Store
+.idea
+
