@@ -1,10 +1,3 @@
-/*
-* @Author: tengfeisu
-* @Date:   2016-07-08 15:57:03
-* @Last Modified by:   tengfeisu
-* @Last Modified time: 2016-07-08 18:35:39
-*/
-
 'use strict';
 
 var React = require('react');
@@ -18,5 +11,5 @@ var Hello = React.createClass({
 
 ReactDOM.render(
   <Hello name="World" />,
-  document.getElementById('AppRoot')
+  document.getElementById('app')
 );
