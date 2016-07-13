@@ -2,71 +2,93 @@
 * @Author: tengfeisu
 * @Date:   2016-05-23 14:09:27
 * @Last Modified by:   tengfeisu
-* @Last Modified time: 2016-07-11 16:36:30
+* @Last Modified time: 2016-07-13 18:16:28
 */
 
 'use strict';
 
 var webpack = require('webpack');
+var path = require('path');
+var HtmlwebpackPlugin = require('html-webpack-plugin');
 var ExtractTextPlugin = require("extract-text-webpack-plugin");
+var AssetsPlugin = require('assets-webpack-plugin');
+
+var ROOT_PATH = path.resolve(__dirname);
+var SRC_PATH = path.resolve(ROOT_PATH,'src');
+var BUILD_PATH = path.resolve(ROOT_PATH,'build');
+
+console.log(SRC_PATH);
+
 module.exports = {
+    // 模块入口
     entry: {
-        main: ['./app/components/GalleryByReactApp.jsx'],
-        vendor: [
-          'react',
-          'react-dom'
+        'index': SRC_PATH + '/js/index.js',
+        // 'a': SRC_PATH + '/js/a.js'
+    },
+    // 模块出口
+    output: {
+        // 打包文件存放的绝对路径
+        path: path.join(__dirname,'build'),
+        // 打包后的文件名
+        filename: 'js/[name]-[chunkhash:8].js',
+        chunkFilename: 'js/[name]-[chunkhash:8].js'
+    },
+
+    module: {
+        loaders: [
+          //.css 文件使用 style-loader 和 css-loader 来处理
+          {
+            test: /\.less$/,
+            loader: ExtractTextPlugin.extract(
+                    'css?sourceMap!'+'less?sourceMap'
+                )
+          },
+          {
+            test: /\.js$/,
+            loader: 'babel'
+          },
+          {
+            test: /.(png|jpg)$/,
+            loader: 'url?limit=8192&name=img/[hash:8].[name].[ext]'
+          }
         ]
-    },
-    stats: {
-        colors:true,
-        reasons:true
-    },
-    resolve:{
-        extensions:['','.js','.jsx'],
-        alias:{
-            'styles': __dirname + 'src/styles',
-            'mixins': __dirname + 'src/mixins',
-            'components': __dirname + 'src/components'
+      },
+
+    resolve: {
+        // 自动扩展文件后缀名，在require模块的时候，可以不用写后缀名
+        extensions: ['', '.js', '.jsx'],
+        // 模块别名定义，方便后续直接引用别名，无需多写长长的地址
+        alias: {
+
         }
     },
-    output: {
-        path: './dist/',
-        filename: 'components/[name].js',
-        publicPath:'/dist'
-    },
-    devtool:'source-map',
-    module: {
-        preloaders: [{
-            test: /\.(js|jsx)$/,
-            exclude: /node_modules/,
-            loader: 'eslint-loader'
-        }],
-        loaders: [{
-            test: /\.(js|jsx)$/,
-            exclude: /node_modules/,
-            loader: 'babel',
-            query: {
-                presets: ['es2015', 'react']
-            }
-        },{
-            test: /\.css$/,
-            loader: "style-loader!css-loader"
-        },{
-            test: /\.less$/,
-            loader: ExtractTextPlugin.extract('css?sourceMap!'+'less?sourceMap')
-        },{
-            test: /\.(png|jpg|woff|woff2)$/,
-            loader: "url-loader?limit=8192"
-        }]
-    },
+    // 插件
     plugins: [
-      new webpack.optimize.CommonsChunkPlugin(/* chunkName= */"vendor", /* filename= */"vendor/vendor.bundle.js"),
-      // 需要手动添加 HotModuleReplacementPlugin , 命令行的方式会自动添加
-      new webpack.HotModuleReplacementPlugin(),
-      new ExtractTextPlugin("[name].css")
-    ],
-    devServer: {
-      hot: true,
-      inline: true
-    }
+        new ExtractTextPlugin("/css/index.css"),
+        // new HtmlwebpackPlugin(),
+        new HtmlwebpackPlugin({
+            title: 'hello world app!',
+            filename: 'html/index.html',
+            template: 'src/html/index.html',
+            inject: true,
+            hash: true,
+            // minify: {  // 压缩HTML文件
+            //     removeComments: true, // 移除HTML中的注释
+            //     collapseWhitespace:true // 移除空白符与换行符
+            // }
+        }),
+        // new webpack.optimize.UglifyJsPlugin({
+        //     compress: {
+        //         warnings: false
+        //     },
+        //     except: ['$super','$','exports','require']  //排除关键字
+        // }),
+        new AssetsPlugin({
+            filename: 'build/webpack.assets.js',
+            processOutput: function(assets){
+                return 'window.WEBPACK_ASSETS = ' + JSON.stringify(assets);
+            }
+        })
+    ]
+
 };
