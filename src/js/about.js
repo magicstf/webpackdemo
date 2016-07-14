@@ -1,14 +1,14 @@
 /*
 * @Author: tengfeisu
-* @Date:   2016-07-13 15:42:27
+* @Date:   2016-07-14 10:40:28
 * @Last Modified by:   tengfeisu
-* @Last Modified time: 2016-07-14 14:00:19
+* @Last Modified time: 2016-07-14 13:59:28
 */
 
 'use strict';
 
 require("../less/common/reset.less");
 require("../less/common/base.less");
-require("../less/index.less");
+require("../less/about.less");
 
-$("#index").html("Some text for index!")
+$("#about").html("Some text for about!")

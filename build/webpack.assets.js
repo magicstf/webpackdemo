@@ -1,1 +1,1 @@
-window.WEBPACK_ASSETS = {"index":{"js":"js/index-47991278.js","css":"/css/index.css"},"tips":{"js":"js/tips-d9e601bf.js"}}
+window.WEBPACK_ASSETS = {"js":{"js":"/build/js/js-81494f7e.js","css":"/build//css/js.css"},"js/common":{"js":"/build/js/js/common-c68a613b.js"},"vendors":{"js":"/build/js/vendors-84881fcd.js"}}
