@@ -2,27 +2,23 @@
 * @Author: tengfeisu
 * @Date:   2016-05-23 14:09:27
 * @Last Modified by:   tengfeisu
-* @Last Modified time: 2016-07-14 19:27:11
+* @Last Modified time: 2016-07-15 16:07:33
 */
 
 'use strict';
 
 var webpack = require('webpack');
 var path = require('path');
-/*
-html-webpack-plugin插件，重中之重，webpack中生成HTML的插件，
-具体可以去这里查看https://www.npmjs.com/package/html-webpack-plugin
- */
+// 生成HTML的插件，
 var HtmlwebpackPlugin = require('html-webpack-plugin');
-/*
-extract-text-webpack-plugin插件，
-有了它就可以将你的样式提取到单独的css文件里，
-妈妈再也不用担心样式会被打包到js文件里了。
- */
+// 将你的样式提取到单独的css文件里
 var ExtractTextPlugin = require("extract-text-webpack-plugin");
+// 生成一个记录了版本号的文件
 var AssetsPlugin = require('assets-webpack-plugin');
-var glob = require('glob'); // glob模块，用于读取webpack入口目录文件
-var CleanPlugin = require('clean-webpack-plugin')//webpack插件，用于清除目录文件
+// glob模块，用于读取webpack入口目录文件
+var glob = require('glob');
+//webpack插件，用于清除目录文件
+var CleanPlugin = require('clean-webpack-plugin');
 
 var ROOT_PATH = path.resolve(__dirname);
 var SRC_PATH = path.resolve(ROOT_PATH,'src');
@@ -30,47 +26,13 @@ var BUILD_PATH = path.resolve(ROOT_PATH,'build');
 
 console.log(SRC_PATH);
 
-// var getEntry = function(globPath, pathDir){
-
-//     var files = glob.sync(globPath);
-//     console.log(files);
-//     console.log("pathDir="+pathDir);
-//     var entries = {}, entry, dirname, basename, pathname, extname;
-//     // 读取开发目录，并进行路径裁剪
-//     for(var i = 0; i < files.length; i++){
-//         entry = files[i];
-//         console.log("entry="+entry);
-
-//         dirname = path.dirname(entry);
-//         console.log("dirname="+dirname);
-
-//         extname = path.extname(entry);
-//         console.log("extname="+extname);
-
-//         basename = path.basename(entry, extname);
-//         console.log("basename="+basename);
-
-//         pathname = path.join(dirname, basename);
-//         console.log("pathname="+pathname);
-
-//         pathname = pathname.slice(7, pathname.length);
-//         console.log("pathname="+pathname);
-
-//         entries[pathname] = ['./' + entry];
-//     }
-//     console.log(entries);
-//         return entries;
-//     }
-
-var getEntry = function () { var entry = {};  glob.sync('./src/**/*.js').forEach(function (name) { var n = name.slice(name.lastIndexOf('src/') + 4, name.length - 3); n = n.slice(0, n.lastIndexOf('/'));  entry[n] = name; }); console.log(entry); return entry; };
-
-// var entries = getEntry('src/**/*.js','src/js/');
-
-// var chunks = Object.keys(entries);
-// getEntry('src/**/*.js','src/');
 module.exports = {
     // 模块入口
-    entry: getEntry(),
+    entry: {
+        'index': SRC_PATH + '/js/index.js',
+        'about': SRC_PATH + '/js/about.js',
+        'list': SRC_PATH + '/js/list.js'
+    },
     // 模块出口
     output: {
         // 输出目录的配置，模板、样式、脚本、图片等资源的路径配置都相对于它

@@ -1,1 +1,1 @@
-window.WEBPACK_ASSETS = {"js":{"js":"/build/js/js-81494f7e.js","css":"/build//css/js.css"},"js/common":{"js":"/build/js/js/common-c68a613b.js"},"vendors":{"js":"/build/js/vendors-84881fcd.js"}}
+window.WEBPACK_ASSETS = {"about":{"js":"/build/js/about-51f0ff02.js","css":"/build//css/about.css"},"index":{"js":"/build/js/index-8f848fae.js","css":"/build//css/index.css"},"list":{"js":"/build/js/list-d6cbab67.js","css":"/build//css/list.css"},"vendors":{"js":"/build/js/vendors-5f1decc7.js","css":"/build//css/vendors.css"}}
